@@ -53,22 +53,3 @@ spec:
         python -m pip install --upgrade pip wheel
         pip install -r requirements.txt
         nosetests $(params.args)
----
-apiVersion: tekton.dev/v1beta1
-kind: Pipeline
-metadata:
-  name: ci-cd-pipeline
-spec:
-  workspaces:
-    - name: output
-    - name: basic-auth # <--- Add this here
-
-  tasks:
-    - name: git-clone
-      taskRef:
-        name: git-clone
-      workspaces:
-        - name: output
-          workspace: output
-        - name: basic-auth  # <--- Link this to pipeline workspace
-          workspace: basic-auth
